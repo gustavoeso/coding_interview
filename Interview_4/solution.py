@@ -22,5 +22,4 @@ def in_order_succ(node: TreeNode) -> TreeNode:
     while pai and pai.right == atual:
         atual = pai
         pai = pai.parent
-
     return pai
