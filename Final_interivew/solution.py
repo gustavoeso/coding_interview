@@ -10,7 +10,7 @@ def group_anagrams(words):
     for palavra in words:
         chave = ''.join(sorted(palavra))
         reorganizadas.append((palavra, chave))
-
+        
     # Etapa 2: Ordena pela chave (palavra ordenada)
     reorganizadas.sort(key=lambda x: x[1])
 
@@ -24,3 +24,8 @@ def group_anagrams(words):
 
     # Etapa 4: Retorna apenas os valores agrupados
     return list(grupos.values())
+
+
+entrada = ["eat", "tea", "tan", "ate", "nat", "bat"]
+saida = group_anagrams(entrada)
+print(saida)
