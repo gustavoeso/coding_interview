@@ -1,51 +1,26 @@
-# Group Anagrams - Solution
-
-from collections import defaultdict
-from typing import List
-
-def group_anagrams_sorted(strs: List[str]) -> List[List[str]]:
+def group_anagrams(words):
     """
-    Group anagrams using sorted strings as dictionary keys.
-    Time Complexity: O(n * k log k)
-    Space Complexity: O(n * k)
+    Agrupa palavras que são anagramas entre si usando ordenação externa e comparação manual.
+
+    :param words: Lista de palavras
+    :return: Lista de listas com grupos de anagramas
     """
-    anagram_map = defaultdict(list)
-    
-    for word in strs:
-        # Step 1: Sort each word to get the key
-        sorted_word = ''.join(sorted(word))
-        # Step 2: Group by the sorted word
-        anagram_map[sorted_word].append(word)
+    # Etapa 1: Cria lista auxiliar com (palavra original, palavra ordenada)
+    reorganizadas = []
+    for palavra in words:
+        chave = ''.join(sorted(palavra))
+        reorganizadas.append((palavra, chave))
 
-    # Step 3: Return grouped values
-    return list(anagram_map.values())
+    # Etapa 2: Ordena pela chave (palavra ordenada)
+    reorganizadas.sort(key=lambda x: x[1])
 
-def group_anagrams_count(strs: List[str]) -> List[List[str]]:
-    """
-    Group anagrams using character count tuple as dictionary keys.
-    Time Complexity: O(n * k)
-    Space Complexity: O(n * k)
-    """
-    anagram_map = defaultdict(list)
+    # Etapa 3: Agrupa no dicionário com base em chaves iguais consecutivas
+    grupos = {}
+    for palavra, chave in reorganizadas:
+        if chave not in grupos:
+            grupos[chave] = [palavra]
+        else:
+            grupos[chave].append(palavra)
 
-    for word in strs:
-        # Step 1: Count frequency of each character (assuming lowercase a-z)
-        count = [0] * 26
-        for char in word:
-            count[ord(char) - ord('a')] += 1
-        # Step 2: Use count as key
-        key = tuple(count)
-        anagram_map[key].append(word)
-
-    # Step 3: Return grouped values
-    return list(anagram_map.values())
-
-# Example usage
-if __name__ == "__main__":
-    input_words = ["eat", "tea", "tan", "ate", "nat", "bat"]
-
-    print("--- Using sorted key ---")
-    print(group_anagrams_sorted(input_words))
-
-    print("--- Using count key ---")
-    print(group_anagrams_count(input_words))
+    # Etapa 4: Retorna apenas os valores agrupados
+    return list(grupos.values())
