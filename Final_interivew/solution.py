@@ -10,11 +10,8 @@ def group_anagrams(words):
     for palavra in words:
         chave = ''.join(sorted(palavra))
         reorganizadas.append((palavra, chave))
-        
-    # Etapa 2: Ordena pela chave (palavra ordenada)
-    reorganizadas.sort(key=lambda x: x[1])
 
-    # Etapa 3: Agrupa no dicionário com base em chaves iguais consecutivas
+    # Etapa 2: Agrupa no dicionário com base em chaves iguais consecutivas
     grupos = {}
     for palavra, chave in reorganizadas:
         if chave not in grupos:
