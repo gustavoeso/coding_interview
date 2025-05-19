@@ -59,21 +59,26 @@ At the end, return the dictionary's values as a list of anagram groups.
 ```python
 def group_anagrams(words):
     """
-    Agrupa palavras que são anagramas entre si usando ordenação de caracteres.
+    Agrupa palavras que são anagramas entre si usando ordenação externa e comparação manual.
+
+    :param words: Lista de palavras
+    :return: Lista de listas com grupos de anagramas
     """
-    grupos = {}
-
+    # Etapa 1: Cria lista auxiliar com (palavra original, palavra ordenada)
+    reorganizadas = []
     for palavra in words:
-        # Cria a chave a partir da palavra ordenada
         chave = ''.join(sorted(palavra))
+        reorganizadas.append((palavra, chave))
 
-        # Adiciona a palavra no grupo correspondente
+    # Etapa 2: Agrupa no dicionário com base em chaves iguais consecutivas
+    grupos = {}
+    for palavra, chave in reorganizadas:
         if chave not in grupos:
             grupos[chave] = [palavra]
         else:
             grupos[chave].append(palavra)
 
-    # Retorna todos os grupos
+    # Etapa 4: Retorna apenas os valores agrupados
     return list(grupos.values())
 ```
 
